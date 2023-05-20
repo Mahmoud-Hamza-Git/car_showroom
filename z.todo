@@ -1,0 +1,9 @@
+notes:
+  ☐ to use inset use box-shadow insread of border (box-shadow: inset 0px 0px 0px 3px #000;)  the 4th value represents the radious of the border
+  
+Soleve_Problems:
+  ☐ i made position absolute for an overlay on images but forgot about the positioning properties (top, left), so the overlay appeared shifted to the next line 😀 overlay on other image😂
+  ☐ we can separate even small titles in components if they are repeated even if the style changes alittle bit, we can handle it using props in styled components
+  ☐ apply the transform to all child cards by 100% they will be shifted (to make slider)
+done:
+  ☐ using react-intersection-observer to detect intersection and apply function 
