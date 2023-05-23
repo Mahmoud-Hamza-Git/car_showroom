@@ -1,4 +1,4 @@
-import { ArrowUpRightIcon } from '@heroicons/react/24/solid';
+import { ArrowUpRightIcon, TrashIcon } from '@heroicons/react/24/solid';
 import { SecContainer, ContentContainer, Content, CartList, EmptyMsg } from './heroStyle';
 import { CartItems, CartItem, CartContent, CartButtons, DeleteBtn, BtnContainer } from './heroStyle';
 import React, { forwardRef, useContext, useEffect } from 'react';
@@ -12,8 +12,51 @@ const Hero = ({ open }, Href) => {
   open = open ? 1 : 0;
   let data = [];
   if (open) {
-    data = carsCtx.cars.filter((car) => car.count > 0);
+    data = carsCtx.cars
+      .map((car, i) => {
+        if (car.count > 0) {
+          return { car, index: i };
+        }
+      })
+      .filter((item) => item);
+    console.log(data);
   }
+
+  const incCount = (index) => {
+    carsCtx.setCars((prev) => {
+      prev[index].count++;
+      localStorage.setItem('cars', JSON.stringify(prev));
+      return [...prev];
+    });
+  };
+
+  const decCount = (index) => {
+    carsCtx.setCars((prev) => {
+      prev[index].count > 0 && prev[index].count--;
+
+      localStorage.setItem('cars', JSON.stringify(prev));
+      return [...prev];
+    });
+  };
+
+  const deleteItem = (index) => {
+    carsCtx.setCars((prev) => {
+      prev[index].count = 0;
+      localStorage.setItem('cars', JSON.stringify(prev));
+      return [...prev];
+    });
+  };
+
+  const deleteAll = () => {
+    carsCtx.setCars((prev) => {
+      prev = prev.map((car) => {
+        car.count = 0;
+        return car;
+      });
+      return prev;
+    });
+  };
+
   return (
     <SecContainer id='sec-1' ref={Href}>
       <ContentContainer>
@@ -33,25 +76,33 @@ const Hero = ({ open }, Href) => {
             {data.length == 0 ? (
               <EmptyMsg>Cart is Empty 😮</EmptyMsg>
             ) : (
-              data.map((car) => (
-                <CartItem>
+              data.map((item, i) => (
+                <CartItem key={i}>
                   <CartContent>
-                    <h2>{car.class}</h2>
-                    <p>{car.name}</p>
+                    <h2>{item.car.class}</h2>
+                    <p>{item.car.name}</p>
                     <CartButtons>
-                      <button className='dec'>-</button>
-                      <span className='count'>{car.count}</span>
-                      <button className='inc'>+</button>
-                      <FontAwesomeIcon icon={faTrash} className='faTrash'></FontAwesomeIcon>
+                      <button className='dec' onClick={() => decCount(item.index)}>
+                        -
+                      </button>
+                      <span className='count'>{item.car.count}</span>
+                      <button className='inc' onClick={() => incCount(item.index)}>
+                        +
+                      </button>
+                      <FontAwesomeIcon
+                        icon={faTrash}
+                        className='faTrash'
+                        onClick={() => deleteItem(item.index)}
+                      />
                     </CartButtons>
                   </CartContent>
-                  <img src={car.img} alt='car' className='cartImg' />
+                  <img src={item.car.img} alt='car' className='cartImg' />
                 </CartItem>
               ))
             )}
           </CartItems>
           <BtnContainer>
-            <DeleteBtn>
+            <DeleteBtn onClick={deleteAll}>
               Delete All <FontAwesomeIcon icon={faTrash} className='faTrash'></FontAwesomeIcon>
             </DeleteBtn>
           </BtnContainer>

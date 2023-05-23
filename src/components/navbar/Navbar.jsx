@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faCartPlus } from '@fortawesome/free-solid-svg-icons';
 import { Container, Content, Logo, Nav_List, Cart } from './NavbarStyle.jsx';
+import { CarsContext } from '../../context/CarsContext';
 
 const Navbar = ({ scroll, leaveHome, onOpenCart }) => {
   const [activeSection, setActiveSection] = useState(1);
@@ -11,7 +12,11 @@ const Navbar = ({ scroll, leaveHome, onOpenCart }) => {
     setActiveSection(e.target.id);
     scroll(e.target.id);
   };
-
+  let numInCart = 0;
+  const carCtx = useContext(CarsContext);
+  carCtx.cars.forEach((car) => {
+    numInCart += car.count;
+  });
   leaveHome = leaveHome ? 1 : 0;
 
   const handleOpen = () => {
@@ -31,9 +36,6 @@ const Navbar = ({ scroll, leaveHome, onOpenCart }) => {
         </Logo>
         <Nav_List active={activeSection} nav={isNavOpened}>
           <div className='small'>
-            <small className='close' onClick={handleNav}>
-              x
-            </small>
             <li id='1' onClick={handleScroll}>
               Home
             </li>
@@ -49,10 +51,15 @@ const Navbar = ({ scroll, leaveHome, onOpenCart }) => {
             <li id='5' onClick={handleScroll}>
               Contact Us
             </li>
+            <small className='close' onClick={handleNav}>
+              x
+            </small>
           </div>
-          <Cart id='cart' num={5} onClick={handleOpen}>
+          <Cart id='cart' num={numInCart} onClick={handleOpen}>
             <FontAwesomeIcon icon={faCartPlus} />
-            <span className='cart-count'>{6}</span>
+            <span className='cart-count' style={{ width: 'fit-content' }}>
+              {numInCart}
+            </span>
           </Cart>
           <small className='open scrolled' onClick={handleNav}>
             <FontAwesomeIcon icon={faBars} />
