@@ -4,8 +4,12 @@ import { forwardRef } from 'react';
 
 const Content = styled.div`
   display: flex;
+  flex-wrap: wrap;
   gap: 8rem;
   height: 80rem;
+  @media screen and (max-width: 670px) {
+    height: 95rem;
+  }
 `;
 const Images = styled.div`
   flex: 2;
@@ -17,6 +21,14 @@ const Images = styled.div`
     top: 10%;
     width: 100%;
   }
+  @media screen and (max-width: 1240px) {
+    & img {
+      height: 75rem;
+    }
+  }
+  @media screen and (max-width: 820px) {
+    display: none;
+  }
 `;
 const Text = styled.div`
   flex: 3;
@@ -25,6 +37,9 @@ const Text = styled.div`
   display: flex;
   flex-direction: column;
   gap: 5rem;
+  @media screen and (max-width: 820px) {
+    font-size: 3rem;
+  }
 `;
 
 const Title = styled.div`

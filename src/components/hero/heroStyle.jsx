@@ -8,6 +8,12 @@ export const SecContainer = styled.div`
   background: url('./images/heroCar.png');
   background-position: center;
   background-size: cover;
+  @media screen and (max-width: 850px) {
+    height: 90vh;
+  }
+  @media screen and (max-width: 520px) {
+    height: 70vh;
+  }
 `;
 
 export const ContentContainer = styled.div`
@@ -61,6 +67,37 @@ export const Content = styled.div`
     background-color: #eee;
     color: #000;
   }
+  @media screen and (max-width: 820px) {
+    width: 100%;
+    text-align: center;
+    align-items: center;
+    gap: 5rem;
+    & p {
+      background-color: #00000044;
+      padding: 3rem;
+      width: 100%;
+      border-radius: 1rem;
+    }
+    & button {
+      background-color: #000;
+    }
+  }
+  @media screen and (max-width: 820px) {
+    width: 100%;
+    text-align: center;
+    align-items: center;
+    gap: 5rem;
+    & p {
+      background-color: #00000044;
+      padding: 3rem;
+      width: 100%;
+      border-radius: 1rem;
+    }
+    & button {
+      background-color: #0000008c;
+      border: none;
+    }
+  }
 `;
 
 export const CartList = styled.div`
@@ -76,8 +113,10 @@ export const CartList = styled.div`
   background-color: #101927f7;
   padding: 2rem 2rem 0;
   z-index: 2;
-  transition: opacity 0.2s;
+  transition: opacity ease-in-out 0.2s, transform step-end 0.1s;
   opacity: ${({ open }) => open};
+
+  ${({ open }) => (!open ? `transform: translateX(200%);` : '')}
 `;
 
 export const CartItems = styled.div`

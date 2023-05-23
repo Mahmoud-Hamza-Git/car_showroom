@@ -3,14 +3,13 @@ import SectionTitle from '../utils/SectionTitle';
 import { ArrowSmallLeftIcon, ArrowSmallRightIcon } from '@heroicons/react/24/solid';
 import { Cards, Content, Card, CarFeatures, CarTitle } from './carsStyle';
 import { ArrowBtn, FContent, FControllers, Navigators } from './carsStyle';
-import { forwardRef, useState } from 'react';
-import cars from '../../data/cars.json';
+import { forwardRef, useContext, useState } from 'react';
+import { CarsContext } from '../../context/CarsContext';
 
 const Cars = ({}, Cref) => {
+  const carsCtx = useContext(CarsContext);
   const [sliderIndex, setSliderIndex] = useState(2);
-  const [carsCounts, setCarsCounts] = useState(
-    JSON.parse(localStorage.getItem('carscounts')) || Array(cars.length).fill(0)
-  );
+
   const slidingRight = (e) => {
     setSliderIndex((prev) => {
       return prev == 1 ? 1 : prev - 1;
@@ -18,47 +17,49 @@ const Cars = ({}, Cref) => {
   };
 
   const slidingLeft = (e) => {
-    const max = cars.length;
+    const max = carsCtx.cars.length;
     setSliderIndex((prev) => {
       return prev == max ? max : prev + 1;
-    });
-  };
-
-  const incCount = (e) => {
-    const index = e.target.dataset.value;
-    setCarsCounts((prev) => {
-      prev[index]++;
-      localStorage.setItem('carscounts', JSON.stringify(prev));
-      return [...prev];
-    });
-  };
-
-  const decCount = (e) => {
-    const index = e.target.dataset.value;
-    setCarsCounts((prev) => {
-      prev[index]--;
-      localStorage.setItem('carscounts', JSON.stringify(prev));
-      return [...prev];
     });
   };
 
   const sliding = (e) => {
     setSliderIndex(+e.target.id.split('-')[1] + 1);
   };
+
+  const incCount = (e) => {
+    const index = e.target.dataset.value;
+    carsCtx.setCars((prev) => {
+      prev[index].count++;
+      localStorage.setItem('cars', JSON.stringify(prev));
+      return [...prev];
+    });
+  };
+
+  const decCount = (e) => {
+    const index = e.target.dataset.value;
+    carsCtx.setCars((prev) => {
+      prev[index].count > 0 && prev[index].count--;
+
+      localStorage.setItem('cars', JSON.stringify(prev));
+      return [...prev];
+    });
+  };
+
   return (
     <SectionContainer id='sec-4' ref={Cref}>
       <Content>
         <SectionTitle type='2' title='cars' />
         <Cards index={sliderIndex}>
-          {cars.length > 0 &&
-            cars.map((car, i) => (
+          {carsCtx.cars.length > 0 &&
+            carsCtx.cars.map((car, i) => (
               <Card key={i} className='card'>
-                <img src={car.image} alt='car' className='carImg' />
+                <img src={car.img} alt='car' className='carImg' />
                 <CarTitle>
                   <h3>{car.class}s</h3>
                   <p>{car.name}</p>
                 </CarTitle>
-                <p className='desc'>{car.description}</p>
+                <p className='desc'>{car.desc}</p>
                 <CarFeatures>
                   <FContent>
                     <div className='item'>
@@ -74,7 +75,7 @@ const Cars = ({}, Cref) => {
                     <button className='fControllerBtn dec' data-value={i} onClick={decCount}>
                       -
                     </button>
-                    <span className='num'>{carsCounts[i]}</span>
+                    <span className='num'>{car.count}</span>
                     <button className='fControllerBtn inc' data-value={i} onClick={incCount}>
                       +
                     </button>
@@ -90,8 +91,10 @@ const Cars = ({}, Cref) => {
           <ArrowSmallLeftIcon className='arrow' />
         </ArrowBtn>
         <Navigators index={sliderIndex}>
-          {cars.length > 0 &&
-            cars.map((car, i) => <div className='dot' id={`dot-${i}`} onClick={sliding} key={i}></div>)}
+          {carsCtx.cars.length > 0 &&
+            carsCtx.cars.map((car, i) => (
+              <div className='dot' id={`dot-${i}`} onClick={sliding} key={i}></div>
+            ))}
         </Navigators>
       </Content>
     </SectionContainer>
@@ -99,9 +102,3 @@ const Cars = ({}, Cref) => {
 };
 
 export default forwardRef(Cars);
-/*
-name
-calss
-count
-img
-*/

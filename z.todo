@@ -1,9 +1,26 @@
 notes:
   ☐ to use inset use box-shadow insread of border (box-shadow: inset 0px 0px 0px 3px #000;)  the 4th value represents the radious of the border
+  ☐ pathing refs to child components using forwardRef() function in child component -- it takes ref objec and props object
   
+Poblem:
+  ☐ can i use the ref returnend from useInView in other uses except the use in detecting intersection??
+
 Soleve_Problems:
   ☐ i made position absolute for an overlay on images but forgot about the positioning properties (top, left), so the overlay appeared shifted to the next line 😀 overlay on other image😂
   ☐ we can separate even small titles in components if they are repeated even if the style changes alittle bit, we can handle it using props in styled components
   ☐ apply the transform to all child cards by 100% they will be shifted (to make slider)
-done:
+  ☐ if you want to make fetch for data from local storage (images - files) it has to be in the public folder it's the only place which is allowed to make requests and fetch data from (security cases will ban all other requests except to proxy server) 
+    and don't forget to use return keyword in any call back function 😂 it makes horible troubles if you forgot
+  ☐ there is two ways to fetch data from file --> import it from any path -- fetch it by request from public folder only or proxy server (requests banned)
+  ☐ there was a problem that there is a section of the screen don't respond to any thing --> that because an elment has the opacity 0 blocks this place --> so if you want to hide any element you need to use transform along with opacity if you want
+
+  done:
   ☐ using react-intersection-observer to detect intersection and apply function 
+  ☐ using context to send the cart and cars state to multiple components 
+  ☐ using the two approaches fetch api and import to get the data stored localy
+  ☐ using localStorage to store data needed to be stored in the user's browser
+  ☐ using useRef and forwardRef to forward refs to child components
+  ☐ using scrolIntoView and ref to make smooth scroll to referenced element
+  ☐ using useInView from react-intersection-observer to make state detects and change when the view port intersect with the referenced element
+
+

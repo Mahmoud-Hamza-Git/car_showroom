@@ -5,8 +5,11 @@ import Services from './components/services sec/Services';
 import Cars from './components/cars/Cars';
 import Gallery from './components/gallery/Gallery';
 import Testimonials from './components/testimonials/Testimonials';
-import { useEffect, useRef, useState } from 'react';
+import Brands from './components/brands/Brands';
+
+import { useRef, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
+import Footer from './components/footer/Footer';
 
 function App() {
   const Href = useRef();
@@ -14,14 +17,14 @@ function App() {
   const Sref = useRef();
   const Cref = useRef();
   const Gref = useRef();
-  const Tref = useRef();
+  const Fref = useRef();
 
   // Hooks
-  const { ref, inView: leaveHome } = useInView({ threshold: 0.07 });
+  const { ref, inView: leaveHome } = useInView();
   const [isCartOpen, setIsCartOpen] = useState(false);
   // Handlers
   const scroll = (sec) => {
-    const sections = [Href, Aref, Sref, Cref, Tref];
+    const sections = [Href, Aref, Sref, Cref, Fref];
     sections[sec - 1].current?.scrollIntoView({ behavior: 'smooth' });
   };
 
@@ -38,13 +41,12 @@ function App() {
         <Services ref={Sref} />
         <Cars ref={Cref} />
         <Gallery ref={Gref} />
-        <Testimonials ref={Tref} />
+        <Testimonials />
+        <Brands />
+        <Footer ref={Fref} />
       </div>
     </>
   );
 }
 
 export default App;
-// useEffect(() => {
-//   console.log(Sref?.current, '😀');
-// }, []);

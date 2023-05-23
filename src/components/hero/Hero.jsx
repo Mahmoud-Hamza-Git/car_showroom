@@ -1,16 +1,18 @@
 import { ArrowUpRightIcon } from '@heroicons/react/24/solid';
 import { SecContainer, ContentContainer, Content, CartList, EmptyMsg } from './heroStyle';
 import { CartItems, CartItem, CartContent, CartButtons, DeleteBtn, BtnContainer } from './heroStyle';
-import React, { forwardRef, useEffect } from 'react';
+import React, { forwardRef, useContext, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { CarsContext } from '../../context/CarsContext';
 
 const Hero = ({ open }, Href) => {
+  const carsCtx = useContext(CarsContext);
+
   open = open ? 1 : 0;
-  let data = '';
+  let data = [];
   if (open) {
-    const cartData = localStorage.getItem('cart');
-    data = JSON.parse(cartData);
+    data = carsCtx.cars.filter((car) => car.count > 0);
   }
   return (
     <SecContainer id='sec-1' ref={Href}>
@@ -28,20 +30,7 @@ const Hero = ({ open }, Href) => {
         </Content>
         <CartList open={open}>
           <CartItems>
-            {/* <CartItem>
-              <CartContent>
-                <h2>SUV</h2>
-                <p>Mercides M class</p>
-                <CartButtons>
-                  <button className='dec'>-</button>
-                  <span className='count'>7</span>
-                  <button className='inc'>+</button>
-                  <FontAwesomeIcon icon={faTrash} className='faTrash'></FontAwesomeIcon>
-                </CartButtons>
-              </CartContent>
-              <img src='./images/cars1.png' alt='car' className='cartImg' />
-            </CartItem> */}
-            {!data ? (
+            {data.length == 0 ? (
               <EmptyMsg>Cart is Empty 😮</EmptyMsg>
             ) : (
               data.map((car) => (

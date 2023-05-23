@@ -8,6 +8,10 @@ const SectionContainer = styled.div`
   padding: 0 8% 5rem;
   background: url('./logos/servicesBg.png'), #80808095;
   background-size: cover;
+  @media screen and (max-width: 820px) {
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
 `;
 
 const Content = styled.div`
@@ -21,6 +25,10 @@ const ServicesList = styled.ul`
   display: flex;
   gap: 5rem;
   font-size: 2rem;
+  @media screen and (max-width: 820px) {
+    flex-direction: column;
+    font-size: 3rem;
+  }
 `;
 const Service = styled.li`
   display: flex;

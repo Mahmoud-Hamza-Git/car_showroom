@@ -43,6 +43,10 @@ export const TCard = styled.div`
     width: 20rem;
     margin-bottom: 1.5rem;
   }
+  @media screen and (max-width: 740px) {
+    height: 50rem;
+  }
+  
 `;
 export const PersonInfo = styled.div`
   display: flex;

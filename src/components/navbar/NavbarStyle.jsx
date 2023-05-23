@@ -10,6 +10,7 @@ export const Container = styled.div`
   position: ${({ scrolled }) => (scrolled ? 'fixed' : 'absolute')};
   color: ${({ scrolled }) => (scrolled ? '#12273D' : '#fff')};
   background-color: ${({ scrolled }) => (scrolled ? '#fff' : 'transparent')};
+  ${({ scrolled }) => scrolled && `& .scrolled.open{color:#000};`}
 `;
 
 export const Content = styled.div`
@@ -47,6 +48,70 @@ export const Nav_List = styled.ul`
     box-shadow: inset 0px 0px 0px 3px #ddd;
     border-radius: 10px;
     background-color: #990b0b25;
+  }
+  .small {
+    display: flex;
+  }
+  .small small {
+    display: none;
+  }
+  .open {
+    display: none;
+  }
+  @media screen and (max-width: 820px) {
+    & .open {
+      display: block;
+      position: absolute;
+      top: -1rem;
+      right: 15%;
+      font-size: 3rem;
+      width: 3rem;
+      height: 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      padding: 2rem;
+    }
+
+    ${({ nav }) =>
+      !nav && `.small {transform: translateX(200%)}; & .open{display:block}; .small .close{display:none}; `}
+    ${({ nav }) => nav && `& .open{display:none}; .small .close{display:block};`}
+
+   
+    .small {
+      position: absolute;
+      right: 0;
+      top: 7rem;
+      flex-direction: column;
+      align-items: center;
+      justify-content: start;
+      padding-top: 10rem;
+      gap: 4rem;
+      width: 40%;
+      height: 100vh;
+      background-color: #000000d7;
+      color: #fff;
+    }
+    .small small {
+      display: block;
+      font-size: 3rem;
+      width: 5rem;
+      height: 5rem;
+      text-align: center;
+      color: #fff;
+      /* padding: 2rem; */
+      border-radius: 5px;
+      border: 1px solid #fff;
+      cursor: pointer;
+      position: absolute;
+      top: 3rem;
+      right: 3rem;
+    }
+    .small li {
+      width: 100%;
+      text-align: center;
+    }
   }
 `;
 

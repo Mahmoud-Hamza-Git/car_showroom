@@ -1,14 +1,20 @@
 import SectionTitle from '../utils/SectionTitle';
 import { forwardRef, useEffect, useState } from 'react';
 import { SectionContainer, Container, TCards, TCard, PersonInfo, Dots } from './testimonialsStyle';
-import testimonials from '../../data/testimonials.json';
 
 const Testimonials = ({}, Tref) => {
   const [commentSelected, setCommentSelected] = useState(1);
+  const [testimonials, setTestimonials] = useState(null);
   const navigateComments = (e) => {
     const index = e.target.id.split('-')[1];
     setCommentSelected(index);
   };
+
+  useEffect(() => {
+    fetch('./testimonials.json')
+      .then((res) => res.json())
+      .then((data) => setTestimonials(data));
+  }, []);
 
   return (
     <SectionContainer id='sec-6' ref={Tref}>

@@ -39,6 +39,9 @@ export const Card = styled.div`
   & .desc {
     font-size: 1.5rem;
   }
+  @media screen and (max-width: 820px) {
+    min-width: calc(50% - 1.5rem);
+  }
 `;
 
 export const CarTitle = styled.div`
@@ -102,6 +105,7 @@ export const FControllers = styled.div`
 `;
 
 export const Navigators = styled.div`
+  color: #00000077;
   display: flex;
   gap: 2rem;
   & .dot {
